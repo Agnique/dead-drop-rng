@@ -17,10 +17,7 @@ int main(int argc, char **argv)
 	int state = 0; 
     bool listening = 1;
     int iter=0;
-	int buf[8] = {0,0,0,0,0,0,0,0};
-	int pt = 0;
 	char ch;
-	int it=0;
 
 	while(listening)
 	{
