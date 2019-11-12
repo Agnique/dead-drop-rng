@@ -20,7 +20,6 @@ int main(int argc, char **argv)
 	char msg[100];
     double send_time;
 	int msg_len;
-    char c[5]={'a','b','c','d','\n'};
 
 	while(sending)
 	{

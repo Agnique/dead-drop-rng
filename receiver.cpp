@@ -129,7 +129,7 @@ char receive_packet()
 
 	if(i!=11)
 	{
-		do_n_rdseed(5000);
+		do_n_rdseed(2000);
 		nops(1000);
 		//printf("wrong bits\n");
 		return ch;
@@ -150,14 +150,14 @@ char receive_packet()
 		}
 		else
 		{
-            do_n_rdseed(5000);
+            do_n_rdseed(2000);
 			nops(1000);
 			//printf("wrong pb\n");
 		} 
 	} 
 	else
 	{
-		do_n_rdseed(5000);
+		do_n_rdseed(2000);
 		nops(1000);
 		//printf("wrong end bits\n");
 	}
