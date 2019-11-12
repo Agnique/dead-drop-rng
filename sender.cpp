@@ -24,7 +24,6 @@ int main(int argc, char **argv)
 
 	while(sending)
 	{
-		for(int i=0;i<100;i++) msg[i] = 0;
 		gets(msg);
 		msg_len = get_len(msg);
 		begin = clock();
@@ -44,14 +43,14 @@ void send(int bit)
 	clock_t begin;
 	clock_t end;
 	
-	nops(100000);
+	nops(10000);
 	if(bit==0)
 	{   
-		do_n_rdseed(120);
+		do_n_rdseed(100);
 	}
 	else
 	{
-        do_n_rdseed(800);
+        do_n_rdseed(300);
 	}
 }
 
@@ -100,21 +99,25 @@ void send_msg(char* c)
 			}
 			break;		
 		case 1: // send state
+		    nops(100000);
 		    send_packet(c[i]);
-			nops(1000000);
-			//printf("sending %c\n",c[i]);
-		    contention = probe_rdseed(2);
+			nops(500);
+			printf("sending %c\n",c[i]);
+		    contention = probe_rdseed(3);
 		    nops(500);
+			contention = probe_rdseed(3);
+			nops(500);
 			it = 0;
 			while(contention)
 			{
-				contention = probe_rdseed(2);
-				nops(50);
+				contention = probe_rdseed(3);
+				nops(500);
 				it++;
 			}
-			if(it>0)
+			if(it>2)
 			{
-				nops(1000000);
+				nops(100000);
+				printf("wrong, it:%d\n",it);
 				state = 1;
 			}
 			else state = 0;
@@ -133,6 +136,7 @@ int get_len(char* c)
 		i++;
 	}
     c[i]='\n';
+	c[i+1] = '\0';
 
 	return i;
 }

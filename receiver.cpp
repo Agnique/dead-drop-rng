@@ -5,6 +5,7 @@
 
 char decode(int buf[8]);
 char receive_packet();
+void listen();
 clock_t begin;
 clock_t end;
 
@@ -12,13 +13,18 @@ int main(int argc, char **argv)
 {
 	// Put your covert channel setup code here
     
-	int contention = 0;
-	int bit;
-	int state = 0; 
-    bool listening = 1;
-    int iter=0;
-	char ch;
+    listen();
 
+	return 0;
+}
+
+void listen()
+{
+	int contention = 0;
+	bool listening = true;
+	int state = 0;
+	char ch;
+	
 	while(listening)
 	{
 		contention = probe_rdseed(5);
@@ -35,13 +41,11 @@ int main(int argc, char **argv)
             case 2:
                 if(contention<1) state = 0;
                 ch = receive_packet();
-				if(ch!=-1) printf("%c",ch);				
+				if(ch!=-1) printf("%c\n",ch);				
 				break;
 		}
 		
 	}
-
-	return 0;
 }
 
 char decode(int buf[8])
@@ -78,7 +82,7 @@ char receive_packet()
 	    nops(500);
 		tmp++;
 	}
-	if(tmp < 10) return -1;
+	if(tmp < 5) return -1;
 
 	while(i<11)
 	{
@@ -112,7 +116,8 @@ char receive_packet()
 			    if(contention < 1)
 				{
 					state = 2;
-					buf[i] = iter>10?1:0;
+					buf[i] = iter>8?1:0;
+					//printf("iter:%d\n",iter);
 					i++;
 				}
 				break;
@@ -124,7 +129,8 @@ char receive_packet()
 
 	if(i!=11)
 	{
-		do_n_rdseed(60000);
+		do_n_rdseed(5000);
+		printf("wrong bits\n");
 		return ch;
 	}
 
@@ -139,18 +145,18 @@ char receive_packet()
 		if(pb==buf[8]) 
 		{
 			ch = decode(buf);
-			nops(500);
+			//nops(500);
 		}
 		else
 		{
-            do_n_rdseed(60000);
-			//printf("wrong pb\n");
+            do_n_rdseed(5000);
+			printf("wrong pb\n");
 		} 
 	} 
 	else
 	{
-		do_n_rdseed(60000);
-		//printf("wrong end bits\n");
+		do_n_rdseed(5000);
+		printf("wrong end bits\n");
 	}
 
     return ch;
