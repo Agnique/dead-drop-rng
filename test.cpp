@@ -42,9 +42,9 @@ int main(int argc, char **argv)
         for(int j=0;j<1000;j++)
         {
             nops(100000);
-            a = probe_rdseed(2);
+            a = probe_rdseed(3);
             nops(i);
-            a = probe_rdseed(2);
+            a = probe_rdseed(3);
             if(a==1) cnt++;
 
         }

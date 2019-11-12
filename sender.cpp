@@ -99,22 +99,22 @@ void send_msg(char* c)
 			}
 			break;		
 		case 1: // send state
-		    nops(100000);
+		    nops(5000);
 		    send_packet(c[i]);
-			nops(500);
+			//nops(200);
 			printf("sending %c\n",c[i]);
-		    contention = probe_rdseed(3);
+		    contention = probe_rdseed(2);
 		    nops(500);
-			contention = probe_rdseed(3);
+			contention = probe_rdseed(2);
 			nops(500);
 			it = 0;
 			while(contention)
 			{
-				contention = probe_rdseed(3);
+				contention = probe_rdseed(2);
 				nops(500);
 				it++;
 			}
-			if(it>2)
+			if(it>0)
 			{
 				nops(100000);
 				printf("wrong, it:%d\n",it);

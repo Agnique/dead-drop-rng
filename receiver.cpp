@@ -41,7 +41,7 @@ void listen()
             case 2:
                 if(contention<1) state = 0;
                 ch = receive_packet();
-				if(ch!=-1) printf("%c\n",ch);				
+				if(ch!=-1) printf("%c",ch);				
 				break;
 		}
 		
@@ -130,7 +130,8 @@ char receive_packet()
 	if(i!=11)
 	{
 		do_n_rdseed(5000);
-		printf("wrong bits\n");
+		nops(1000);
+		//printf("wrong bits\n");
 		return ch;
 	}
 
@@ -150,13 +151,15 @@ char receive_packet()
 		else
 		{
             do_n_rdseed(5000);
-			printf("wrong pb\n");
+			nops(1000);
+			//printf("wrong pb\n");
 		} 
 	} 
 	else
 	{
 		do_n_rdseed(5000);
-		printf("wrong end bits\n");
+		nops(1000);
+		//printf("wrong end bits\n");
 	}
 
     return ch;
